@@ -25,7 +25,7 @@ export function ArticleTeaser({ node, ...props }: ArticleTeaserProps) {
       {node.field_image && (
         <figure className="my-4">
           <Image
-            src={absoluteUrl(node.field_image.uri.url)}
+            src={absoluteUrl(node.field_image.field_media_image.uri.url)}
             width={768}
             height={480}
             alt={node.field_image.resourceIdObjMeta.alt}
