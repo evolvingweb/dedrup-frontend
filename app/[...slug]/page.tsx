@@ -129,7 +129,7 @@ export default async function NodePage(props: NodePageProps) {
   }
 
   // If we're not in draft mode and the resource is not published, return a 404.
-  if (!isDraftMode && node?.status === false) {
+  if (!isDraftMode && node?.status !== true) {
     notFound()
   }
 
