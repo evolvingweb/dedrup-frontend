@@ -29,17 +29,17 @@ async function getNode(slug: string[]) {
   const uuid = translatedPath.entity.uuid
   const tag = `${translatedPath.entity.type}:${translatedPath.entity.id}`
 
-  if (type === "node--article") {
-    params.include = "field_image,uid"
-  }
+  // if (type === "node--article") {
+  //   params.include = "field_image,uid"
+  // }
 
   const resource = await drupal.getResource<DrupalNode>(type, uuid, {
     params,
     cache: "force-cache",
     next: {
-      revalidate: 3600,
+      // revalidate: 3600,
       // Replace `revalidate` with `tags` if using tag based revalidation.
-      // tags: [tag],
+      tags: [tag],
     },
   })
 

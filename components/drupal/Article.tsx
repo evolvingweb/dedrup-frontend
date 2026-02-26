@@ -22,9 +22,9 @@ export function Article({ node, ...props }: ArticleProps) {
       {node.field_image && (
         <figure>
           <Image
-            src={absoluteUrl(node.field_image.uri.url)}
-            width={768}
-            height={400}
+            src={node.field_image.field_media_image.links.hero.href}
+            width={1024}
+            height={680}
             alt={node.field_image.resourceIdObjMeta.alt || ""}
             priority
           />
@@ -35,12 +35,10 @@ export function Article({ node, ...props }: ArticleProps) {
           )}
         </figure>
       )}
-      {node.body?.processed && (
-        <div
-          dangerouslySetInnerHTML={{ __html: node.body?.processed }}
-          className="mt-6 font-serif text-xl leading-loose prose"
-        />
-      )}
+      <div
+        dangerouslySetInnerHTML={{ __html: node.components[0].field_body }}
+        className="mt-6 font-serif text-xl leading-loose prose"
+      />
     </article>
   )
 }
