@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { getDraftData } from "next-drupal/draft"
 import { Article } from "@/components/drupal/Article"
 import { BasicPage } from "@/components/drupal/BasicPage"
+import { Footer } from "@/components/navigation/Footer"
 import { drupal } from "@/lib/drupal"
 import type { Metadata, ResolvingMetadata } from "next"
 import type { DrupalNode, JsonApiParams } from "next-drupal"
@@ -133,6 +134,7 @@ export default async function NodePage(props: NodePageProps) {
     <>
       {node.type === "node--page" && <BasicPage node={node} />}
       {node.type === "node--article" && <Article node={node} />}
+      <Footer />
     </>
   )
 }
