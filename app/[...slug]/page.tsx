@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { getDraftData } from "next-drupal/draft"
 import { Article } from "@/components/drupal/Article"
 import { BasicPage } from "@/components/drupal/BasicPage"
+import { Header } from "@/components/navigation/Header"
 import { Footer } from "@/components/navigation/Footer"
 import { drupal } from "@/lib/drupal"
 import type { Metadata, ResolvingMetadata } from "next"
@@ -132,6 +133,7 @@ export default async function NodePage(props: NodePageProps) {
 
   return (
     <>
+      <Header />
       {node.type === "node--page" && <BasicPage node={node} />}
       {node.type === "node--article" && <Article node={node} />}
       <Footer />

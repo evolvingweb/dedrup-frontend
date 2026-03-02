@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export function HeaderNav() {
+export function Header() {
   return (
     <header className="bg-scheme-2 flex items-center justify-center h-[72px] px-page-x w-full shrink-0">
       <div className="flex items-center gap-8 w-full max-w-container">

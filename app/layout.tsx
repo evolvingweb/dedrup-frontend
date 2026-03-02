@@ -1,5 +1,5 @@
 import { DraftAlert } from "@/components/misc/DraftAlert"
-import { HeaderNav } from "@/components/navigation/HeaderNav"
+import { Header } from "@/components/navigation/Header"
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
 
@@ -27,7 +27,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <DraftAlert />
-        <HeaderNav />
         <main>{children}</main>
       </body>
     </html>
