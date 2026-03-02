@@ -1,29 +1,23 @@
 import Link from "next/link"
+import { drupal } from "@/lib/drupal"
 
-export function Header() {
+export async function Header() {
+  const { items } = await drupal.getMenu("main")
+
   return (
     <header className="bg-scheme-2 flex items-center justify-center h-[72px] px-page-x w-full shrink-0">
       <div className="flex items-center gap-8 w-full max-w-container">
         {/* Left: nav links */}
         <nav className="flex flex-1 items-center gap-8">
-          <Link
-            href="/explore"
-            className="text-white text-text-regular leading-[1.6] hover:opacity-80 transition-opacity"
-          >
-            Explore Prompts
-          </Link>
-          <Link
-            href="/community"
-            className="text-white text-text-regular leading-[1.6] hover:opacity-80 transition-opacity"
-          >
-            Writing Community
-          </Link>
-          <Link
-            href="/inspire"
-            className="text-white text-text-regular leading-[1.6] hover:opacity-80 transition-opacity"
-          >
-            Get Inspired
-          </Link>
+          {items.map((item) => (
+            <Link
+              key={item.id}
+              href={item.url}
+              className="text-white text-text-regular leading-[1.6] hover:opacity-80 transition-opacity"
+            >
+              {item.title}
+            </Link>
+          ))}
         </nav>
 
         {/* Center: logo */}
