@@ -1,6 +1,12 @@
 import Link from "next/link"
+import { drupal } from "@/lib/drupal"
 
-export function Footer() {
+export async function Footer() {
+  const [{ items: footerItems }, { items: legalItems }] = await Promise.all([
+    drupal.getMenu("footer"),
+    drupal.getMenu("legal"),
+  ])
+
   return (
     <footer className="bg-scheme-2 flex items-center justify-center px-page-x py-section-md w-full">
       <div className="flex flex-col gap-[80px] items-start max-w-container w-full">
@@ -14,16 +20,15 @@ export function Footer() {
               </span>
             </Link>
             <nav className="flex flex-wrap gap-8 items-start max-w-[480px]">
-              {["About Us", "Contact Us", "FAQs", "Support", "Terms"].map(
-                (label) => (
-                  <span
-                    key={label}
-                    className="text-white text-text-small font-semibold leading-[1.6] hover:opacity-80 transition-opacity cursor-pointer"
-                  >
-                    {label}
-                  </span>
-                )
-              )}
+              {footerItems.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.url}
+                  className="text-white text-text-small font-semibold leading-[1.6] hover:opacity-80 transition-opacity"
+                >
+                  {item.title}
+                </Link>
+              ))}
             </nav>
           </div>
 
@@ -61,17 +66,13 @@ export function Footer() {
           <div className="h-px w-full bg-white/20" />
           <div className="flex items-start justify-between w-full text-white text-text-small leading-[1.6]">
             <div className="flex gap-6">
-              {[
-                { label: "Privacy Policy", href: "/privacy" },
-                { label: "Terms of Service", href: "/terms" },
-                { label: "Cookie Policy", href: "/cookies" },
-              ].map(({ label, href }) => (
+              {legalItems.map((item) => (
                 <Link
-                  key={label}
-                  href={href}
+                  key={item.id}
+                  href={item.url}
                   className="underline hover:opacity-80 transition-opacity"
                 >
-                  {label}
+                  {item.title}
                 </Link>
               ))}
             </div>
