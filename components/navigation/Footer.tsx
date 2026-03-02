@@ -1,11 +1,46 @@
 import Link from "next/link"
 import { drupal } from "@/lib/drupal"
+import type { DrupalMenuLinkContent } from "next-drupal"
 
 export async function Footer() {
+  // Method 1: Promises
   const [{ items: footerItems }, { items: legalItems }] = await Promise.all([
     drupal.getMenu("footer"),
     drupal.getMenu("legal"),
   ])
+
+  // Method 2: Subrequests
+  // const endpoint = drupal.buildUrl("/subrequests", { _format: "json" }).toString()
+  //
+  // const response = await drupal.fetch(endpoint, {
+  //   method: "POST",
+  //   withAuth: true,
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify([
+  //     {
+  //       requestId: "footerMenu",
+  //       action: "view",
+  //       uri: "/jsonapi/menu_items/footer",
+  //       headers: { Accept: "application/vnd.api+json" },
+  //     },
+  //     {
+  //       requestId: "legalMenu",
+  //       action: "view",
+  //       uri: "/jsonapi/menu_items/legal",
+  //       headers: { Accept: "application/vnd.api+json" },
+  //     },
+  //   ]),
+  // })
+  //
+  // const json = await response.json()
+  //
+  // const footerItems = (drupal.deserialize(
+  //   JSON.parse(json.footerMenu?.body ?? "{}")
+  // ) ?? []) as DrupalMenuLinkContent[]
+  //
+  // const legalItems = (drupal.deserialize(
+  //   JSON.parse(json.legalMenu?.body ?? "{}")
+  // ) ?? []) as DrupalMenuLinkContent[]
 
   return (
     <footer className="bg-scheme-2 flex items-center justify-center px-page-x py-section-md w-full">
