@@ -5,8 +5,6 @@ import { FeaturedCardsParagraph } from "@/components/drupal/FeaturedCardsParagra
 import { RichText } from "@/components/drupal/RichText"
 import { RecentArticles } from "@/components/drupal/RecentArticles"
 import { Image } from "@/components/drupal/Image"
-import { absoluteUrl } from "@/lib/utils"
-import { FeaturedCards } from "@/components/drupal/FeaturedCards"
 
 interface ParagraphBlockProps {
   paragraph: DrupalParagraph
@@ -42,34 +40,7 @@ export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
       )
 
     case "paragraph--featured_cards":
-      // return <FeaturedCardsParagraph paragraph={paragraph} />
-      return (
-        <FeaturedCards
-          title={paragraph.field_title}
-          cards={paragraph.field_cards.map(
-            (card: {
-              field_title: string
-              field_body: string
-              field_image: {
-                field_media_image: {
-                  uri: { url: string }
-                  resourceIdObjMeta?: { alt?: string }
-                  links: { [key: string]: { href: string } }
-                }
-              }
-              field_link?: { url: string; title: string }
-            }) => ({
-              title: card.field_title,
-              body: card.field_body,
-              imageUrl: card.field_image.field_media_image.links.hero.href,
-              imageAlt: card.field_image.field_media_image?.resourceIdObjMeta?.alt ?? "",
-              cta: card.field_link
-                ? { href: card.field_link.url, label: card.field_link.title }
-                : undefined,
-            })
-          )}
-        />
-      )
+      return <FeaturedCardsParagraph paragraph={paragraph} />
 
     case "paragraph--rich_text":
       return <RichText body={paragraph.field_body.processed} />
