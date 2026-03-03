@@ -1,22 +1,35 @@
 import Image from "next/image"
 import Link from "next/link"
 
+type CtaButton = {
+  label: string
+  href: string
+  buttonType?: string
+}
+
 interface HeroBannerProps {
   title: string
   subtitle?: string
   imageUrl?: string
   imageAlt?: string
-  primaryCta?: { label: string; href: string }
-  secondaryCta?: { label: string; href: string }
+  buttons?: CtaButton[]
 }
+
+const buttonStyles: Record<string, string> = {
+  primary:
+    "bg-electric-violet border-electric-violet-dark border-t-[1.5px] border-r-[1.5px] border-b-4 border-l-[1.5px] border-solid text-white",
+  secondary:
+    "border-white/20 border-t-[1.5px] border-r-[1.5px] border-b-4 border-l-[1.5px] border-solid text-white",
+}
+
+const defaultButtonStyle = buttonStyles.secondary
 
 export function HeroBanner({
   title,
   subtitle,
   imageUrl,
   imageAlt = "",
-  primaryCta,
-  secondaryCta,
+  buttons = [],
 }: HeroBannerProps) {
   return (
     <section className="relative flex items-center justify-center h-[900px] px-page-x overflow-hidden bg-scheme-2">
@@ -50,24 +63,17 @@ export function HeroBanner({
               </p>
             )}
           </div>
-          {(primaryCta || secondaryCta) && (
+          {buttons.length > 0 && (
             <div className="flex gap-4 items-start">
-              {primaryCta && (
+              {buttons.map((button, index) => (
                 <Link
-                  href={primaryCta.href}
-                  className="bg-electric-violet border-electric-violet-dark border-t-[1.5px] border-r-[1.5px] border-b-4 border-l-[1.5px] border-solid text-white font-medium text-text-regular px-6 py-[10px] rounded-button"
+                  key={index}
+                  href={button.href}
+                  className={`${buttonStyles[button.buttonType ?? ""] ?? defaultButtonStyle} font-medium text-text-regular px-6 py-[10px] rounded-button`}
                 >
-                  {primaryCta.label}
+                  {button.label}
                 </Link>
-              )}
-              {secondaryCta && (
-                <Link
-                  href={secondaryCta.href}
-                  className="border-white/20 border-t-[1.5px] border-r-[1.5px] border-b-4 border-l-[1.5px] border-solid text-white font-medium text-text-regular px-6 py-[10px] rounded-button"
-                >
-                  {secondaryCta.label}
-                </Link>
-              )}
+              ))}
             </div>
           )}
         </div>

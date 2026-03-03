@@ -11,19 +11,19 @@ interface ParagraphBlockProps {
 export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
   switch (paragraph.type) {
     case "paragraph--hero_banner":
+      console.log(paragraph.field_buttons[0])
       return (
         <HeroBanner
           title={paragraph.field_title}
           subtitle={paragraph.field_subtitle}
           imageUrl={paragraph.field_image.field_media_image.links.hero.href}
-          primaryCta={{
-            href: paragraph.field_buttons[0].field_link.uri,
-            label: paragraph.field_buttons[0].field_link.title,
-          }}
-          secondaryCta={{
-            href: paragraph.field_buttons[1].field_link.uri,
-            label: paragraph.field_buttons[1].field_link.title,
-          }}
+          buttons={paragraph.field_buttons.map(
+            (btn: { field_link: { uri: string; title: string }; field_button_type: string }) => ({
+              href: btn.field_link.uri,
+              label: btn.field_link.title,
+              buttonType: btn.field_button_type,
+            })
+          )}
         />
       )
 
