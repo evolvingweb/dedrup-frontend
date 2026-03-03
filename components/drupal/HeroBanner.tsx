@@ -53,7 +53,6 @@ export function HeroBanner({
           <div className="flex flex-col gap-6 items-center text-white text-center w-full">
             <h1
               className="font-fraunces font-semibold text-heading-1 tracking-[0.84px] w-full"
-              style={{ fontVariationSettings: "'SOFT' 0, 'WONK' 1" }}
             >
               {title}
             </h1>

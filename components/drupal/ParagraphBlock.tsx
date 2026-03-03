@@ -11,7 +11,6 @@ interface ParagraphBlockProps {
 export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
   switch (paragraph.type) {
     case "paragraph--hero_banner":
-      console.log(paragraph.field_buttons[0])
       return (
         <HeroBanner
           title={paragraph.field_title}
