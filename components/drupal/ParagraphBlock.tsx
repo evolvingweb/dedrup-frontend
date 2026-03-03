@@ -3,6 +3,7 @@ import { HeroBanner } from "@/components/drupal/HeroBanner"
 import { FeaturedTextWithImage } from "@/components/drupal/FeaturedTextWithImage"
 import { FeaturedCards } from "@/components/drupal/FeaturedCards"
 import { RichText } from "@/components/drupal/RichText"
+import { RecentArticles } from "@/components/drupal/RecentArticles"
 import { absoluteUrl } from "@/lib/utils"
 
 interface ParagraphBlockProps {
@@ -53,14 +54,14 @@ export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
                   links: { [key: string]: { href: string } }
                 }
               }
-              field_link?: { uri: string; title: string }
+              field_link?: { url: string; title: string }
             }) => ({
               title: card.field_title,
               body: card.field_body,
               imageUrl: card.field_image.field_media_image.links.hero.href,
               imageAlt: card.field_image.field_media_image?.resourceIdObjMeta?.alt ?? "",
               cta: card.field_link
-                ? { href: card.field_link.uri, label: card.field_link.title }
+                ? { href: card.field_link.url, label: card.field_link.title }
                 : undefined,
             })
           )}
@@ -69,6 +70,9 @@ export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
 
     case "paragraph--rich_text":
       return <RichText body={paragraph.field_body.processed} />
+
+    case "paragraph--recent_articles":
+      return <RecentArticles />
 
     default:
       return null
