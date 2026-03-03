@@ -1,11 +1,12 @@
 import type { DrupalParagraph } from "next-drupal"
 import { HeroBanner } from "@/components/drupal/HeroBanner"
 import { FeaturedTextWithImage } from "@/components/drupal/FeaturedTextWithImage"
-import { FeaturedCards } from "@/components/drupal/FeaturedCards"
+import { FeaturedCardsParagraph } from "@/components/drupal/FeaturedCardsParagraph"
 import { RichText } from "@/components/drupal/RichText"
 import { RecentArticles } from "@/components/drupal/RecentArticles"
 import { Image } from "@/components/drupal/Image"
 import { absoluteUrl } from "@/lib/utils"
+import { FeaturedCards } from "@/components/drupal/FeaturedCards"
 
 interface ParagraphBlockProps {
   paragraph: DrupalParagraph
@@ -41,6 +42,7 @@ export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
       )
 
     case "paragraph--featured_cards":
+      // return <FeaturedCardsParagraph paragraph={paragraph} />
       return (
         <FeaturedCards
           title={paragraph.field_title}
