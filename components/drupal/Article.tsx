@@ -26,7 +26,7 @@ export function Article({ node }: ArticleProps) {
 
       {/* Content */}
       <div className="flex flex-col items-center px-page-x pt-section-md pb-8 w-full">
-        <div className="flex flex-col gap-8 w-full">
+        <div className="flex flex-col gap-8 prose max-w-container w-full">
           {/* Meta */}
           <div className="flex items-center gap-2 font-sans text-text-small text-neutral-darkest/60">
             {node.uid?.display_name && (
