@@ -1,44 +1,55 @@
 import Image from "next/image"
-import { absoluteUrl, formatDate } from "@/lib/utils"
-import type { DrupalNode } from "next-drupal"
+import { formatDate } from "@/lib/utils"
+import type { DrupalNode, DrupalParagraph } from "next-drupal"
+import { ParagraphBlock } from "@/components/drupal/ParagraphBlock"
 
 interface ArticleProps {
   node: DrupalNode
 }
 
-export function Article({ node, ...props }: ArticleProps) {
+export function Article({ node }: ArticleProps) {
   return (
-    <article {...props}>
-      <h1 className="mb-4 text-6xl font-black leading-tight">{node.title}</h1>
-      <div className="mb-4 text-gray-600">
-        {node.uid?.display_name ? (
-          <span>
-            Posted by{" "}
-            <span className="font-semibold">{node.uid?.display_name}</span>
-          </span>
-        ) : null}
-        <span> - {formatDate(node.created)}</span>
-      </div>
+    <article className="flex flex-col items-center w-full">
+      {/* Hero image */}
       {node.field_image && (
-        <figure>
+        <div className="relative w-full aspect-[1440/560] overflow-hidden">
           <Image
             src={node.field_image.field_media_image.links.hero.href}
-            width={1024}
-            height={680}
             alt={node.field_image.resourceIdObjMeta.alt || ""}
+            fill
+            className="object-cover"
             priority
           />
-          {node.field_image.resourceIdObjMeta.title && (
-            <figcaption className="py-2 text-sm text-center text-gray-600">
-              {node.field_image.resourceIdObjMeta.title}
-            </figcaption>
-          )}
-        </figure>
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
       )}
-      <div
-        dangerouslySetInnerHTML={{ __html: node.components[0].field_body }}
-        className="mt-6 font-serif text-xl leading-loose prose"
-      />
+
+      {/* Content */}
+      <div className="flex flex-col items-center px-page-x pt-section-md pb-8 w-full">
+        <div className="flex flex-col gap-8 w-full">
+          {/* Meta */}
+          <div className="flex items-center gap-2 font-sans text-text-small text-neutral-darkest/60">
+            {node.uid?.display_name && (
+              <>
+                <span className="font-semibold text-neutral-darkest">
+                  {node.uid.display_name}
+                </span>
+                <span aria-hidden="true">·</span>
+              </>
+            )}
+            <time dateTime={node.created}>{formatDate(node.created)}</time>
+          </div>
+
+          {/* Title */}
+          <h1 className="font-fraunces font-semibold text-heading-2 tracking-[0.6px] text-neutral-darkest">
+            {node.title}
+          </h1>
+        </div>
+      </div>
+      {/* Body */}
+      {node.field_content?.map((paragraph: DrupalParagraph) => (
+        <ParagraphBlock key={paragraph.id} paragraph={paragraph} />
+      ))}
     </article>
   )
 }
