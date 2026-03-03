@@ -2,6 +2,7 @@ import type { DrupalParagraph } from "next-drupal"
 import { HeroBanner } from "@/components/drupal/HeroBanner"
 import { FeaturedTextWithImage } from "@/components/drupal/FeaturedTextWithImage"
 import { FeaturedCards } from "@/components/drupal/FeaturedCards"
+import { RichText } from "@/components/drupal/RichText"
 import { absoluteUrl } from "@/lib/utils"
 
 interface ParagraphBlockProps {
@@ -65,6 +66,9 @@ export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
           )}
         />
       )
+
+    case "paragraph--rich_text":
+      return <RichText body={paragraph.field_body.processed} />
 
     default:
       return null
