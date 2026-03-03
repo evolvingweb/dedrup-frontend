@@ -4,6 +4,7 @@ import { FeaturedTextWithImage } from "@/components/drupal/FeaturedTextWithImage
 import { FeaturedCards } from "@/components/drupal/FeaturedCards"
 import { RichText } from "@/components/drupal/RichText"
 import { RecentArticles } from "@/components/drupal/RecentArticles"
+import { Image } from "@/components/drupal/Image"
 import { absoluteUrl } from "@/lib/utils"
 
 interface ParagraphBlockProps {
@@ -73,6 +74,15 @@ export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
 
     case "paragraph--recent_articles":
       return <RecentArticles />
+
+    case "paragraph--image":
+      return (
+        <Image
+          src={paragraph.field_image.field_media_image.links.hero.href}
+          alt={paragraph.field_image?.resourceIdObjMeta?.alt ?? ""}
+          caption={paragraph.field_subtitle}
+        />
+      )
 
     default:
       return null
