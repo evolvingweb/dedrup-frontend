@@ -97,8 +97,6 @@ export async function generateStaticParams(): Promise<NodePageParams[]> {
     }
   )
 
-  console.log(resources)
-
   return resources.map((resource) => {
     // resources is an array containing objects like: {
     //   path: "/blog/some-category/a-blog-post",
@@ -114,7 +112,6 @@ export async function generateStaticParams(): Promise<NodePageParams[]> {
 
 export default async function NodePage(props: NodePageProps) {
   const params = await props.params
-  console.log(params)
 
   const { slug } = params
 
