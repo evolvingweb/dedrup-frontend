@@ -9,6 +9,16 @@ import { drupal } from "@/lib/drupal"
 import type { Metadata, ResolvingMetadata } from "next"
 import type { DrupalNode, JsonApiParams } from "next-drupal"
 
+/**
+ * Fetches a Drupal node by its URL slug segments.
+ *
+ * Translates the path via the Decoupled Router to discover the resource type
+ * and UUID, then fetches the full resource from JSON:API. In draft mode, the
+ * correct resource version is requested so unpublished revisions are returned.
+ *
+ * Throws with cause "NotFound" if the path cannot be resolved, or "DrupalError"
+ * if the resource fetch fails.
+ */
 async function getNode(slug: string[]) {
   const path = slug ? `/${slug.join("/")}` : '/home'
 
@@ -61,6 +71,12 @@ type NodePageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
+/**
+ * Generates the page metadata (title, etc.) for a Drupal node.
+ *
+ * Silently returns empty metadata if the node cannot be fetched, so that
+ * a missing or unpublished node does not cause the metadata export to throw.
+ */
 export async function generateMetadata(
   props: NodePageProps,
   parent: ResolvingMetadata
@@ -84,6 +100,10 @@ export async function generateMetadata(
 
 const RESOURCE_TYPES = ["node--page", "node--article"]
 
+/**
+ * Pre-generates static path segments for all known Drupal node types at build
+ * time. Only the resource types listed in RESOURCE_TYPES are included.
+ */
 export async function generateStaticParams(): Promise<NodePageParams[]> {
   const resources = await drupal.getResourceCollectionPathSegments(
     RESOURCE_TYPES,
@@ -110,6 +130,13 @@ export async function generateStaticParams(): Promise<NodePageParams[]> {
   })
 }
 
+/**
+ * Catch-all page that renders any Drupal node matched by its URL path.
+ *
+ * Resolves the slug to a Drupal node, enforces published status outside of
+ * draft mode, and delegates rendering to the appropriate node component based
+ * on the resource type. Defaults to the "/home" path when no slug is present.
+ */
 export default async function NodePage(props: NodePageProps) {
   const params = await props.params
 
