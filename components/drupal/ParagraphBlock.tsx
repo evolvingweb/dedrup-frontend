@@ -32,7 +32,7 @@ export function ParagraphBlock({ paragraph }: ParagraphBlockProps) {
       return (
         <FeaturedTextWithImage
           title={paragraph.field_title}
-          body={paragraph.field_body}
+          body={paragraph.field_subtitle}
           items={paragraph.field_feature_list}
           imageUrl={paragraph.field_image.field_media_image.links.hero.href}
           imageAlt={paragraph.field_image?.resourceIdObjMeta?.alt ?? ""}
